@@ -12,10 +12,12 @@ export default function Terminal() {
     { text: 'Welcome to Aditya\'s portfolio interface. Type "help" to see available commands.', type: 'output' },
   ]);
   
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (cmd: string) => {
@@ -133,6 +135,7 @@ export default function Terminal() {
 
       {/* Terminal Screen content */}
       <div 
+        ref={containerRef}
         className="flex-1 overflow-y-auto p-4 flex flex-col gap-2"
         style={{
           display: 'flex',
@@ -177,7 +180,6 @@ export default function Terminal() {
             placeholder="Type a command..."
           />
         </div>
-        <div ref={terminalEndRef} />
       </div>
     </div>
   );
